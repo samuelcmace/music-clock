@@ -24,5 +24,27 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Build Android Application
-        run: ./gradlew build
+      - name: Execute Unit Tests
+        run: ./gradlew test
+
+      - name: Generate Debug APK
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'}}
+        run: ./gradlew assembleDebug
+
+      - name: Upload Debug APK Artifact
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'}}
+        uses: actions/upload-artifact@v3
+        with:
+          name: MusicClock
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Generate Release APK
+        if: ${{ github.event_name == 'release' }}
+        run: ./gradlew assembleRelease
+
+      - name: Upload Release APK Artifact
+        if: ${{ github.event_name == 'release' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: MusicClock
+          path: app/build/outputs/apk/release/app-release.apk
