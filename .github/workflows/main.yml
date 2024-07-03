@@ -19,7 +19,7 @@ jobs:
           distribution: 'corretto'
 
       - name: Setup Gradle Build System
-        uses: actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
