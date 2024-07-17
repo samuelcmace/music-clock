@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,8 +34,8 @@ class MainActivity : ComponentActivity() {
                 var name by remember {
                     mutableStateOf("")
                 }
-                var names by remember {
-                    mutableStateOf(listOf<String>())
+                val names = remember {
+                    mutableListOf<String>()
                 }
                 Column(
                     modifier = Modifier
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.width(16.dp))
                         Button(onClick = {
                             if (name.isNotBlank()) {
-                                names = names + name
+                                names.add(name)
                                 name = ""
                             }
                         }) {
@@ -82,7 +83,7 @@ fun NameList(
                     .fillMaxWidth()
                     .padding(16.dp)
             )
-            Divider()
+            HorizontalDivider()
         }
     }
 }
